@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { api } from "../../services/api";
 import { Container } from "./styles";
 
 type TransactionProps = {
@@ -13,9 +14,8 @@ type TransactionProps = {
 export function TransactionsTable() {
   const [transactions, setTransactions] = useState<TransactionProps[]>([])
   useEffect(() => {
-    fetch('http://localhost:3000/api/transactions')
-      .then(response => response.json())
-      .then(data => setTransactions(data as TransactionProps[]))
+    api.get('/transactions')
+      .then(response => setTransactions(response.data as TransactionProps[]))
   }, [])
 
   return (
@@ -31,19 +31,22 @@ export function TransactionsTable() {
         </thead>
 
         <tbody>
-          <tr>
-            <td>Site entregue</td>
-            <td className="income">R$1500</td>
-            <td>Desenvolvimento</td>
-            <td>23/11/2021</td>
-          </tr>
 
-          <tr>
-            <td>Aluguel</td>
-            <td className="outcome">- R$500</td>
-            <td>casa</td>
-            <td>03/11/2021</td>
-          </tr>
+          {
+            transactions.map(transaction => {
+              const dateSplit = transaction.createdAt.toString().split('T')[0].split('-')
+              const date = `${dateSplit[2]}/${dateSplit[1]}/${dateSplit[0]}`
+              return (
+                <tr key={transaction.id}>
+                  <td>{transaction.title}</td>
+                  <td className={transaction.type}>{transaction.type === 'outcome' && '-'} R${transaction.value.toFixed(2)}</td>
+                  <td>{transaction.category}</td>
+                  <td>{date}</td>
+                </tr>
+              )
+            })
+          }
+
         </tbody>
       </table>
     </Container>
