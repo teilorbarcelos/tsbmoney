@@ -14,6 +14,7 @@ export function App() {
       <NewTransactionModal
         isNewTransactionModalOpen={isNewTransactionModalOpen}
         setIsNewTransactionModalOpen={setIsNewTransactionModalOpen}
+      // updateList={}
       />
 
       <GlobalStyle />

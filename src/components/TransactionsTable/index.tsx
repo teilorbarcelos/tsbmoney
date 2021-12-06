@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { Container } from "./styles";
 
-type TransactionProps = {
+export type TransactionProps = {
   id: number
   title: string
   value: number
@@ -13,9 +13,10 @@ type TransactionProps = {
 
 export function TransactionsTable() {
   const [transactions, setTransactions] = useState<TransactionProps[]>([])
+
   useEffect(() => {
     api.get('/transactions')
-      .then(response => setTransactions(response.data as TransactionProps[]))
+      .then(response => setTransactions(response.data.transactions as TransactionProps[]))
   }, [])
 
   return (
@@ -33,6 +34,7 @@ export function TransactionsTable() {
         <tbody>
 
           {
+            transactions.length > 0 &&
             transactions.map(transaction => {
               const dateSplit = transaction.createdAt.toString().split('T')[0].split('-')
               const date = `${dateSplit[2]}/${dateSplit[1]}/${dateSplit[0]}`
