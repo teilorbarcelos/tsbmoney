@@ -1,10 +1,9 @@
-import { FormEvent, useState } from "react"
+import { FormEvent, useContext, useState } from "react"
 import ReactModal from "react-modal"
 import closeImg from '../../assets/close.svg'
 import incomeImg from '../../assets/income.svg'
 import outcomeImg from '../../assets/outcome.svg'
-import { api } from "../../services/api"
-import { TransactionProps } from "../TransactionsTable"
+import { NewTransactionProps, TransactionsContext } from "../../contexts/TransactionsContext"
 import { Container, TransactionTypeContainer, TypeButton } from "./styles"
 
 ReactModal.setAppElement('#root')
@@ -18,6 +17,7 @@ export function NewTransactionModal({
   isNewTransactionModalOpen,
   setIsNewTransactionModalOpen
 }: Props) {
+  const { newTransaction } = useContext(TransactionsContext)
   const [title, setTitle] = useState('')
   const [value, setValue] = useState(0)
   const [category, setCategory] = useState('')
@@ -26,18 +26,23 @@ export function NewTransactionModal({
 
   async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault()
+
     // Envia os dados para API
-    const response = await api.post<TransactionProps>('/newTransaction', {
+    const newTransactionData: NewTransactionProps = {
       title,
       value,
-      type,
-      category
-    })
+      category,
+      type
+    }
+
+    await newTransaction(newTransactionData)
 
     // Apaga os dados do formulário
     setTitle('')
     setValue(0)
     setCategory('')
+
+    setIsNewTransactionModalOpen(false)
   }
 
   return (
