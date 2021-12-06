@@ -36,14 +36,20 @@ export function TransactionsTable() {
           {
             transactions.length > 0 &&
             transactions.map(transaction => {
-              const dateSplit = transaction.createdAt.toString().split('T')[0].split('-')
-              const date = `${dateSplit[2]}/${dateSplit[1]}/${dateSplit[0]}`
               return (
                 <tr key={transaction.id}>
                   <td>{transaction.title}</td>
-                  <td className={transaction.type}>{transaction.type === 'outcome' && '-'} R${transaction.value.toFixed(2)}</td>
+                  <td className={transaction.type}>{
+                    new Intl.NumberFormat('pt-BR', {
+                      style: "currency",
+                      currency: "BRL"
+                    }).format(transaction.value)
+                  }</td>
                   <td>{transaction.category}</td>
-                  <td>{date}</td>
+                  <td>{
+                    new Intl.DateTimeFormat('pt-BR')
+                      .format(new Date(transaction.createdAt))
+                  }</td>
                 </tr>
               )
             })
