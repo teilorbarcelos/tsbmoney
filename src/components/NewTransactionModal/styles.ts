@@ -1,4 +1,4 @@
-import { darken } from "polished"
+import { darken, transparentize } from "polished"
 import styled from "styled-components"
 
 export const Container = styled.form`
@@ -57,6 +57,7 @@ export const TransactionTypeCOntainer = styled.div`
 
 type TypeButtonProps = {
   isSelected: boolean
+  selectedColor: 'green' | 'red'
 }
 
 export const TypeButton = styled.button<TypeButtonProps>`
@@ -64,7 +65,12 @@ export const TypeButton = styled.button<TypeButtonProps>`
   border: 1px solid #d7d7d7;
   border-radius: 0.25rem;
 
-  background: ${(props) => props.isSelected ? '#ccc' : 'transparent'};
+  background: ${(props) => props.isSelected ?
+    props.selectedColor === 'green' ?
+      transparentize(0.9, '#33cc95') :
+      transparentize(0.9, '#e52e4d') :
+    'transparent'
+  };
 
   display: flex;
   align-items: center;

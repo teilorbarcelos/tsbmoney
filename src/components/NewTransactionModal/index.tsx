@@ -47,6 +47,7 @@ export function NewTransactionModal({ isNewTransactionModalOpen, setIsNewTransac
             type="button"
             isSelected={transactionType === 'income'}
             onClick={() => setTransactionType('income')}
+            selectedColor="green"
           >
             <img src={incomeImg} alt="Icone de entrada" />
             <span>Entrada</span>
@@ -56,6 +57,7 @@ export function NewTransactionModal({ isNewTransactionModalOpen, setIsNewTransac
             type="button"
             isSelected={transactionType === 'outcome'}
             onClick={() => setTransactionType('outcome')}
+            selectedColor="red"
           >
             <img src={outcomeImg} alt="Icone de saída" />
             <span>Saída</span>
