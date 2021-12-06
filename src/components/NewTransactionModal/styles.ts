@@ -53,33 +53,37 @@ export const TransactionTypeCOntainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
+`
 
-  button {
-    height: 4rem;
-    border: 1px solid #d7d7d7;
-    border-radius: 0.25rem;
+type TypeButtonProps = {
+  isSelected: boolean
+}
 
-    background: transparent;
+export const TypeButton = styled.button<TypeButtonProps>`
+  height: 4rem;
+  border: 1px solid #d7d7d7;
+  border-radius: 0.25rem;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    transition: 0.2s;
+  background: ${(props) => props.isSelected ? '#ccc' : 'transparent'};
 
-    &:hover {
-      border-color: ${darken(0.1, '#d7d7d7')};
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  transition: 0.2s;
 
-    img {
-      width: 20px;
-      height: 20px;
-    }
+  &:hover {
+    border-color: ${darken(0.1, '#d7d7d7')};
+  }
 
-    span {
-      display: inline-block;
-      font-size: 1rem;
-      color: var(--text-title);
-    }
+  img {
+    width: 20px;
+    height: 20px;
+  }
+
+  span {
+    display: inline-block;
+    font-size: 1rem;
+    color: var(--text-title);
   }
 `

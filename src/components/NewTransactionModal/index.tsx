@@ -1,8 +1,9 @@
+import { useState } from "react"
 import ReactModal from "react-modal"
 import closeImg from '../../assets/close.svg'
 import incomeImg from '../../assets/income.svg'
 import outcomeImg from '../../assets/outcome.svg'
-import { Container, TransactionTypeCOntainer } from "./styles"
+import { Container, TransactionTypeCOntainer, TypeButton } from "./styles"
 
 ReactModal.setAppElement('#root')
 
@@ -12,6 +13,7 @@ type Props = {
 }
 
 export function NewTransactionModal({ isNewTransactionModalOpen, setIsNewTransactionModalOpen }: Props) {
+  const [transactionType, setTransactionType] = useState<'income' | 'outcome'>('income')
 
   return (
     <ReactModal
@@ -41,19 +43,23 @@ export function NewTransactionModal({ isNewTransactionModalOpen, setIsNewTransac
         />
 
         <TransactionTypeCOntainer>
-          <button
+          <TypeButton
             type="button"
+            isSelected={transactionType === 'income'}
+            onClick={() => setTransactionType('income')}
           >
             <img src={incomeImg} alt="Icone de entrada" />
             <span>Entrada</span>
-          </button>
+          </TypeButton>
 
-          <button
+          <TypeButton
             type="button"
+            isSelected={transactionType === 'outcome'}
+            onClick={() => setTransactionType('outcome')}
           >
             <img src={outcomeImg} alt="Icone de saída" />
             <span>Saída</span>
-          </button>
+          </TypeButton>
         </TransactionTypeCOntainer>
 
         <input
