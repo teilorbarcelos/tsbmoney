@@ -12,13 +12,11 @@ ReactModal.setAppElement('#root')
 type Props = {
   isNewTransactionModalOpen: boolean
   setIsNewTransactionModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-  updateList?: () => void
 }
 
 export function NewTransactionModal({
   isNewTransactionModalOpen,
-  setIsNewTransactionModalOpen,
-  updateList
+  setIsNewTransactionModalOpen
 }: Props) {
   const [title, setTitle] = useState('')
   const [value, setValue] = useState(0)
