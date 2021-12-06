@@ -1,4 +1,4 @@
-import { createContext, ReactElement, ReactNode, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { api } from "../../services/api";
 
 export type TransactionProps = {
@@ -32,9 +32,12 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   }
 
   async function newTransaction(data: NewTransactionProps) {
-    const response = await api.post<NewTransactionProps>('/newTransaction', data)
+    const response = await api.post('/newTransaction', data)
 
-    getTransactions()
+    setTransactions([
+      ...transactions,
+      response.data.transactions
+    ])
   }
 
   useEffect(() => {
