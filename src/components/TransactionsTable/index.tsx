@@ -1,9 +1,8 @@
-import { useContext } from "react"
-import { TransactionsContext } from "../../contexts/TransactionsContext"
+import { useTransactions } from "../../hooks/useTransactions"
 import { Container } from "./styles"
 
 export function TransactionsTable() {
-  const { transactions } = useContext(TransactionsContext)
+  const { transactions } = useTransactions()
 
   return (
     <Container>
@@ -20,25 +19,27 @@ export function TransactionsTable() {
         <tbody>
 
           {
-            transactions.length > 0 &&
-            transactions.map(transaction => {
-              return (
-                <tr key={transaction.id}>
-                  <td>{transaction.title}</td>
-                  <td className={transaction.type}>{
-                    new Intl.NumberFormat('pt-BR', {
-                      style: "currency",
-                      currency: "BRL"
-                    }).format(transaction.value)
-                  }</td>
-                  <td>{transaction.category}</td>
-                  <td>{
-                    new Intl.DateTimeFormat('pt-BR')
-                      .format(new Date(transaction.createdAt))
-                  }</td>
-                </tr>
-              )
-            })
+            transactions.length > 0 ?
+              transactions.map(transaction => {
+                return (
+                  <tr key={transaction.id}>
+                    <td>{transaction.title}</td>
+                    <td className={transaction.type}>{
+                      new Intl.NumberFormat('pt-BR', {
+                        style: "currency",
+                        currency: "BRL"
+                      }).format(transaction.value)
+                    }</td>
+                    <td>{transaction.category}</td>
+                    <td>{
+                      new Intl.DateTimeFormat('pt-BR')
+                        .format(new Date(transaction.createdAt))
+                    }</td>
+                  </tr>
+                )
+              })
+              :
+              null
           }
 
         </tbody>
